@@ -1,0 +1,2 @@
+# Optional: only for local SVG browser screenshots.
+playwright>=1.49,<2

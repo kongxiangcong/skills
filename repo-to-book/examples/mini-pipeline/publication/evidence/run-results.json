@@ -1,0 +1,30 @@
+{
+  "python": "3.13.5",
+  "platform": "linux",
+  "results": [
+    {
+      "input": "ADD 2 3",
+      "returncode": 0,
+      "stdout": "5",
+      "error": ""
+    },
+    {
+      "input": "MUL 2 3",
+      "returncode": 0,
+      "stdout": "6",
+      "error": ""
+    },
+    {
+      "input": "add 02 3",
+      "returncode": 0,
+      "stdout": "5",
+      "error": ""
+    },
+    {
+      "input": "DIV 2 3",
+      "returncode": 1,
+      "stdout": "",
+      "error": "ValueError: unsupported operation: DIV"
+    }
+  ]
+}

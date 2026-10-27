@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "title": "读懂 Mini Pipeline",
+  "subtitle": "把研究交给 Codex，把写作交给你选择的模型",
+  "language": "zh-CN",
+  "status": "ready",
+  "plan": "plan.md",
+  "sources": "sources.md",
+  "review": "review.md",
+  "evidence_files": [
+    "evidence/pipeline.py",
+    "evidence/run-results.json"
+  ],
+  "chapters": [
+    {
+      "id": "01-overview",
+      "title": "第 1 章 · 先找到贯穿项目的对象",
+      "materials": "chapters/01-overview/materials.md",
+      "status": "ready",
+      "assets": [
+        {
+          "id": "fig-01-01",
+          "file": "chapters/01-overview/assets/fig-01-01.svg",
+          "editable": "chapters/01-overview/assets/fig-01-01.html",
+          "method": "static-svg",
+          "status": "ready",
+          "caption": "图 1-1 · 文本经过计划对象，成为一个整数结果",
+          "evidence": [
+            "s01",
+            "s02"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02-trace",
+      "title": "第 2 章 · 用具体值走完一次执行",
+      "materials": "chapters/02-trace/materials.md",
+      "status": "ready",
+      "assets": [
+        {
+          "id": "fig-02-01",
+          "file": "chapters/02-trace/assets/fig-02-01.svg",
+          "editable": "chapters/02-trace/assets/fig-02-01.html",
+          "method": "static-svg",
+          "status": "ready",
+          "caption": "图 2-1 · 同一个输入在三个观察点上的值",
+          "evidence": [
+            "s01",
+            "s02",
+            "s03"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03-boundaries",
+      "title": "第 3 章 · 正常路径之外，接口还承诺什么",
+      "materials": "chapters/03-boundaries/materials.md",
+      "status": "ready",
+      "assets": [
+        {
+          "id": "fig-03-01",
+          "file": "chapters/03-boundaries/assets/fig-03-01.svg",
+          "editable": "chapters/03-boundaries/assets/fig-03-01.html",
+          "method": "static-svg",
+          "status": "ready",
+          "caption": "图 3-1 · 非法操作在编译阶段停止，后续步骤没有发生",
+          "evidence": [
+            "s01",
+            "s03"
+          ]
+        },
+        {
+          "id": "fig-03-02",
+          "file": "chapters/03-boundaries/assets/fig-03-02.svg",
+          "editable": "chapters/03-boundaries/assets/fig-03-02.html",
+          "method": "static-svg",
+          "status": "ready",
+          "caption": "图 3-2 · 绕过编译器直接构造 Plan，会遇到另一处检查",
+          "evidence": [
+            "s02"
+          ]
+        }
+      ]
+    }
+  ]
+}

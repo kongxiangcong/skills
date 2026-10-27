@@ -1,0 +1,6 @@
+interface:
+  display_name: "Repo to Write"
+  short_description: "按读者需求组织技术书，克制编辑与图文编排，离线 HTML，PDF 按需"
+  default_prompt: "使用 $repo-to-write，将这份已完成的研究素材包写成图解技术书。只做写作和图文编排，不重复调研，不调用 Codex 专属工具，保留原始目录，默认交付离线 HTML。"
+policy:
+  allow_implicit_invocation: false
