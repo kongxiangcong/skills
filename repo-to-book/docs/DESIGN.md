@@ -4,7 +4,7 @@
 
 两个技能独立安装和调用。repo-to-research 运行于 Codex，主 agent 规划，
 源码/外部研究子 agent 深挖各章，默认使用 diagram-design 与内置 imagegen 按语义完成实际图像。
-阶段一交付完整素材后停止。repo-to-book 由用户另行调用，可以交给其他模型，
+阶段一交付完整素材后停止。repo-to-write 由用户另行调用，可以交给其他模型，
 只写作、衔接、图文编排和出版；源稿目录保留，默认 HTML，PDF 可选。
 
 ## 接口选择
@@ -41,6 +41,6 @@ HTML 使用本地图片内嵌，首次安装只需 Markdown 解析库；PDF 另�
 
 ## 迁移
 
-旧版一体式 repo-to-book 改为 skills/ 下两个独立包；旧书稿仍能由 book.py 构建。
+旧版一体式 repo-to-book 改为 skills/ 下两个独立包；写作技能现名 repo-to-write，旧书稿仍能由 book.py 构建。
 旧素材若只有 plan/sources/chapters，需要实际补分章材料和图片索引，不机械“迁移”成 ready。
 安装时不覆盖旧技能，用户先备份移开。两个运行包各含相同 handoff.py，以便独立分发；测试核对一致。

@@ -8,8 +8,8 @@
 
 ```bash
 python skills/repo-to-research/scripts/research.py check examples/priority-queue/research
-python skills/repo-to-book/scripts/book.py check examples/priority-queue/publication --delivery
-python skills/repo-to-book/scripts/book.py build examples/priority-queue/publication
+python skills/repo-to-write/scripts/book.py check examples/priority-queue/publication --delivery
+python skills/repo-to-write/scripts/book.py build examples/priority-queue/publication
 ```
 
 以上在项目根目录执行。没有 PDF 默认依赖；图片与必要源码按许可随包。

@@ -88,5 +88,5 @@ python <skill-dir>/scripts/research.py export <research-dir> --out research-hand
 不扫描打包整个工作区，因此 `.git`、其他项目、预览和未登记文件不会被默认带走。
 所有必要证据必须加入 evidence_files；记录的图片、提示词与编辑源会自动跟随。
 
-导出后停止，由用户把素材包与 repo-to-book 技能交给所选写作模型。
+导出后停止，由用户把素材包与 repo-to-write 技能交给所选写作模型。
 不得因该模型不同而要求重做研究；不得自行发送给第三方。

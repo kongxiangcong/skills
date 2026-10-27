@@ -6,7 +6,7 @@ source/ 是教学代码；research/ 是可移植分章材料；publication/ 是�
 ```bash
 python skills/repo-to-research/scripts/research.py check examples/mini-pipeline/research
 python skills/repo-to-research/scripts/research.py export examples/mini-pipeline/research --out /tmp/research.zip
-python skills/repo-to-book/scripts/book.py build examples/mini-pipeline/publication
+python skills/repo-to-write/scripts/book.py build examples/mini-pipeline/publication
 ```
 
 素材可复制到完全独立的位置，结合单独写作技能使用。示例里的四张 SVG 真实来源是旧版测试 fixture，

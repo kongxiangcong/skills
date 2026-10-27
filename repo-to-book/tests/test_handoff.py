@@ -15,7 +15,7 @@ from zipfile import ZipFile
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'scripts'))
 sys.path.insert(0, str(ROOT/'skills/repo-to-research/scripts'))
-sys.path.insert(0, str(ROOT/'skills/repo-to-book/scripts'))
+sys.path.insert(0, str(ROOT/'skills/repo-to-write/scripts'))
 import book
 import handoff
 import research
@@ -55,7 +55,7 @@ class HandoffTests(unittest.TestCase):
 
     def test_contract_copies_are_identical(self):
         self.assertEqual((ROOT/'skills/repo-to-research/scripts/handoff.py').read_bytes(),
-                         (ROOT/'skills/repo-to-book/scripts/handoff.py').read_bytes())
+                         (ROOT/'skills/repo-to-write/scripts/handoff.py').read_bytes())
 
     def test_init_draft_and_no_overwrite(self):
         new = self.root/'new'
@@ -198,12 +198,12 @@ class HandoffTests(unittest.TestCase):
             pdf.assert_not_called()
         self.assertTrue((dest/'dist/book.html').is_file())
         self.assertFalse((dest/'dist/book.pdf').exists())
-        self.assertNotIn('playwright',(ROOT/'skills/repo-to-book/requirements.txt').read_text(encoding='utf-8'))
+        self.assertNotIn('playwright',(ROOT/'skills/repo-to-write/requirements.txt').read_text(encoding='utf-8'))
 
     def test_isolated_writer_without_research_skill_or_network(self):
         # Copy only the writing skill + exported raw materials to another directory.
         isolated=self.root/'isolated';isolated.mkdir()
-        skill=isolated/'writer';shutil.copytree(ROOT/'skills/repo-to-book',skill)
+        skill=isolated/'writer';shutil.copytree(ROOT/'skills/repo-to-write',skill)
         outzip=self.root/'handoff.zip';research.export_bundle(self.bundle,outzip)
         with ZipFile(outzip) as z:z.extractall(isolated)
         # Isolated import path; socket is blocked. No researcher skill is in this directory.
@@ -243,14 +243,14 @@ class InstallerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as t:
             dest=Path(t)/'skills';installer.install(dest)
             for name in installer.NAMES:self.assertTrue((dest/name/'SKILL.md').is_file())
-            self.assertFalse((dest/'repo-to-book/scripts/research.py').exists())
+            self.assertFalse((dest/'repo-to-write/scripts/research.py').exists())
             self.assertFalse((dest/'repo-to-research/scripts/book.py').exists())
             with self.assertRaisesRegex(ValueError,'已存在'):installer.install(dest)
 
     def test_install_writer_only(self):
         with tempfile.TemporaryDirectory() as t:
-            dest=Path(t)/'skills';installer.install(dest,('repo-to-book',))
-            self.assertTrue((dest/'repo-to-book/scripts/book.py').is_file())
+            dest=Path(t)/'skills';installer.install(dest,('repo-to-write',))
+            self.assertTrue((dest/'repo-to-write/scripts/book.py').is_file())
             self.assertFalse((dest/'repo-to-research').exists())
 
     def test_install_researcher_only(self):
@@ -261,12 +261,12 @@ class InstallerTests(unittest.TestCase):
 
     def test_missing_existing_one_does_not_partially_install(self):
         with tempfile.TemporaryDirectory() as t:
-            dest=Path(t)/'skills';(dest/'repo-to-book').mkdir(parents=True)
+            dest=Path(t)/'skills';(dest/'repo-to-write').mkdir(parents=True)
             with self.assertRaises(ValueError):installer.install(dest)
             self.assertFalse((dest/'repo-to-research').exists())
 
     def test_writer_requires_explicit_invocation(self):
-        self.assertIn('allow_implicit_invocation: false',(ROOT/'skills/repo-to-book/agents/openai.yaml').read_text(encoding='utf-8'))
+        self.assertIn('allow_implicit_invocation: false',(ROOT/'skills/repo-to-write/agents/openai.yaml').read_text(encoding='utf-8'))
         self.assertIn('allow_implicit_invocation: false',(ROOT/'skills/repo-to-research/agents/openai.yaml').read_text(encoding='utf-8'))
 
 

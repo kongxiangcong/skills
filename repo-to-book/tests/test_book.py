@@ -13,7 +13,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 sys.path.insert(0, str(ROOT / 'skills/repo-to-research/scripts'))
-sys.path.insert(0, str(ROOT / 'skills/repo-to-book/scripts'))
+sys.path.insert(0, str(ROOT / 'skills/repo-to-write/scripts'))
 import book
 import figure
 import install as installer
@@ -177,7 +177,7 @@ class BookTests(unittest.TestCase):
         self.assertFalse((self.path/'dist/book.pdf').exists())
 
     def test_cli_paths_with_spaces_unicode_hash(self):
-        result = subprocess.run([sys.executable, str(ROOT/'skills/repo-to-book/scripts/book.py'), 'check', str(self.path)], capture_output=True)
+        result = subprocess.run([sys.executable, str(ROOT/'skills/repo-to-write/scripts/book.py'), 'check', str(self.path)], capture_output=True)
         self.assertEqual(result.returncode, 0, result.stderr.decode('utf-8', errors='replace'))
 
 

@@ -84,7 +84,7 @@ class PackagingTests(unittest.TestCase):
 
     def test_real_project_and_both_skill_archives(self):
         with patch.object(package, 'ROOT', ROOT):
-            for source in (ROOT, ROOT/'skills/repo-to-research', ROOT/'skills/repo-to-book'):
+            for source in (ROOT, ROOT/'skills/repo-to-research', ROOT/'skills/repo-to-write'):
                 target = Path(self.tmp.name)/(source.name + str(len(source.parts))+'.zip')
                 self.assertGreater(package.archive(source, target, source.name), 0)
                 with ZipFile(target) as archive:

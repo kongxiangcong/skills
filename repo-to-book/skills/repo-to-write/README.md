@@ -1,8 +1,8 @@
-# repo-to-book
+# repo-to-write
 
 这是独立的阶段二写作与出版技能，不需要 Codex、研究技能或出图工具。
 在任何能读文件的模型环境中读取 SKILL.md，再读研究包的 START_HERE.md 即可。
-Codex 安装时可放进 `~/.agents/skills/repo-to-book`，但不是使用前提。
+Codex 安装时可放进 `~/.agents/skills/repo-to-write`，但不是使用前提。
 
 ```bash
 python -m pip install -r requirements.txt

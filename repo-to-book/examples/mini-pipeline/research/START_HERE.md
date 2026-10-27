@@ -1,7 +1,7 @@
 # 从这里开始：读懂 Mini Pipeline
 
 这是阶段一交接的研究素材，不是已写好的书。研究与绘图已经停止，
-**只有用户另行调用 repo-to-book，或明确委托其他模型写作时，才开始阶段二。**
+**只有用户另行调用 repo-to-write，或明确委托其他模型写作时，才开始阶段二。**
 
 ## 阅读顺序
 
@@ -18,7 +18,7 @@
 
 ## 给任意写作模型的指令
 
-使用 repo-to-book 的写作方法，将这些材料组织成一部有统一主线的图解技术书。
+使用 repo-to-write 的写作方法，将这些材料组织成一部有统一主线的图解技术书。
 不要重新运行研究、联网查证或调用 Codex；不要依赖原聊天、临时工具 id 或原机器路径。
 先设计各章的叙事与衔接，再逐章独立组织语言，不拼贴研究笔记。
 图前交代问题，图后带读关键变化与设计取舍；使用包内静态图片和稳定来源编号。
@@ -30,13 +30,13 @@ PDF 仅在用户明确要求时另行生成。不要擅自把图片发往外部�
 
 ## 有终端的运行环境
 
-将独立 `repo-to-book` 技能包放到任意目录（无需 Codex、模型 API 或研究技能）。
+将独立 `repo-to-write` 技能包放到任意目录（无需 Codex、模型 API 或研究技能）。
 安装它的 `requirements.txt`，然后执行：
 
 ```bash
-python <repo-to-book>/scripts/book.py prepare <本素材目录> <新的图书目录>
+python <repo-to-write>/scripts/book.py prepare <本素材目录> <新的图书目录>
 # 按材料写完 manuscript/ 下的各章，并填写 writing-review.md
-python <repo-to-book>/scripts/book.py build <新的图书目录>
+python <repo-to-write>/scripts/book.py build <新的图书目录>
 # 只有明确需要 PDF 时：安装 requirements-pdf.txt 和 Chromium，再用 --format pdf
 ```
 

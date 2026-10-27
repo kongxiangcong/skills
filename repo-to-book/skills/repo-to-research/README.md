@@ -14,4 +14,4 @@ python scripts/research.py export ./research --out ./research-handoff.zip
 ```
 
 完整格式见 references/handoff.md；图片生产见 references/visual-production.md。
-没有最终正文、HTML 或 PDF 生产命令。之后由用户另行调用独立 repo-to-book 技能。
+没有最终正文、HTML 或 PDF 生产命令。之后由用户另行调用独立 repo-to-write 技能。

@@ -92,7 +92,7 @@ def main(argv: Optional[List[str]] = None) -> int:
             print(f"{'草稿结构' if args.draft else '交接文件'}检查通过：{len(obj['chapters'])} 章。不是事实正确性或独立审校证明。")
         else:
             count = export_bundle(args.directory, args.out)
-            print(f"已导出 {count} 个交接文件：{args.out}。到此停止；由用户另行启动 repo-to-book。")
+            print(f"已导出 {count} 个交接文件：{args.out}。到此停止；由用户另行启动 repo-to-write。")
         return 0
     except (ValueError, OSError, UnicodeError) as exc:
         print(f"错误：{exc}", file=sys.stderr)

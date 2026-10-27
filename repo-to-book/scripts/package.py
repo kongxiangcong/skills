@@ -72,9 +72,9 @@ def main(argv=None):
         return 2
     try:
         for source, name, prefix in [
-            (ROOT, 'repo-to-book-v2-project.zip', 'repo-to-book'),
+            (ROOT, 'repo-to-book-project.zip', 'repo-to-book'),
             (ROOT/'skills/repo-to-research', 'repo-to-research-skill.zip', 'repo-to-research'),
-            (ROOT/'skills/repo-to-book', 'repo-to-book-v2-skill.zip', 'repo-to-book')]:
+            (ROOT/'skills/repo-to-write', 'repo-to-write-skill.zip', 'repo-to-write')]:
             count = archive(source, out/name, prefix)
             print(f'{name}: {count} files')
         return 0

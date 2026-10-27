@@ -7,7 +7,7 @@ import shutil
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-NAMES = ("repo-to-research", "repo-to-book")
+NAMES = ("repo-to-research", "repo-to-write")
 
 
 def install(destination: Path, names=NAMES) -> None:
@@ -19,6 +19,8 @@ def install(destination: Path, names=NAMES) -> None:
             raise ValueError(f"未知技能：{name}")
         if (destination / name).exists():
             raise ValueError(f"目标已存在，未覆盖：{destination / name}。请先备份/移走旧技能，或改 --dest。")
+    if "repo-to-write" in names and (destination / "repo-to-book").exists():
+        raise ValueError("发现旧写作技能 repo-to-book；请先备份并移出技能发现目录，或选用新的 --dest。未安装任何技能。")
     installed = []
     try:
         for name in names:

@@ -84,3 +84,42 @@ commit `d31d821d56c8f7756af9c30a864077f2e5855321` 的必要源码、构建说明
 遵循随附 `LICENSE`（BSD）及文件头许可。详见 evidence/upstream-provenance.json。
 研究/写作材料由本次任务生成；概念插画由内置 imagegen 实际生成，提示词随图保存。
 diagram-design 仅作为外部制作工具调用；本项目不把上游工具及字体打包。
+
+## Diátaxis 与 Humanizer：写作规范来源（2026-10-27）
+
+Diátaxis，Daniele Procida，源码固定 commit `957c09ca40b4a1edc23874f713e01937d50d54d5`：
+- https://diataxis.fr/
+- https://diataxis.fr/explanation/
+- https://diataxis.fr/reference-explanation/
+- https://github.com/evildmp/diataxis-documentation-framework/tree/957c09ca40b4a1edc23874f713e01937d50d54d5
+
+实际阅读三页及源码 `source/index.rst`、`source/explanation.rst`、`source/reference-explanation.rst` 和 `LICENSE.rst`。上游为 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)，提供内容不作保证。本项目借鉴读者需求与四类内容的思想，自写中文技术书规则和教学假设；未复制/翻译上游段落、图、比喻或示例，不将上游全文纳入 MIT。写作规范没有要求写作者联网获取上游。若后续复制或改编其受保护表达，须为该部分保留归属、改动和相同许可，不能沿用根 MIT 代替。
+
+Humanizer，Siqi Chen，`SKILL.md` version 3.1.0，固定 commit `8c307f367c91bd974002f10f2be2965d642c13df`：
+https://github.com/blader/humanizer/blob/8c307f367c91bd974002f10f2be2965d642c13df/SKILL.md
+
+实际阅读完整技能与 LICENSE。`references/writing.md` 将保留信息、整段编辑和用户风格优先等方法适配为中文技术写作规则，未镜像完整规则表；英语标点硬规则不移植，也不分发其链接的 Wikipedia 文本。为这部分方法适配保留 MIT 通知；项目其他部分许可不变：
+
+```text
+MIT License
+
+Copyright (c) 2025 Siqi Chen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
