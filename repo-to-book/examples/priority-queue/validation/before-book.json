@@ -1,0 +1,61 @@
+{
+  "title": "读懂 boltons 优先队列",
+  "subtitle": "从输入到弹出，再看删除与更新",
+  "language": "zh-CN",
+  "author": "",
+  "edition": "独立材料写作版 · 核心缺口待补",
+  "chapters": [
+    "manuscript/01-lifecycle.md",
+    "manuscript/02-removal.md"
+  ],
+  "sources": "sources.md",
+  "research_files": {
+    "chapters/01-lifecycle/assets/fig-01-01.html": "30a0ae23e0eb3921e9c8e5c86b98c17d6bca31244fcbc8914269b4770ccdce52",
+    "chapters/01-lifecycle/assets/fig-01-01.svg": "9217b6bcbdb0a4d1569a29601323102f0203e28764627b10d41dff0507a08c1b",
+    "chapters/01-lifecycle/assets/fig-01-02.png": "054b5a3951de192c35aaa2ba26c020cc7b6ed0ab0e4831add059d7545caf8909",
+    "chapters/01-lifecycle/assets/fig-01-02.prompt.md": "870c05b681a23d17618f77a540a8c2cd88ed44d08021017e3da90b24d3a55c8f",
+    "chapters/01-lifecycle/materials.md": "ef10dbf0c5a9da5346f242f769c4c65b30aeb9044230809325010cdfef630aa0",
+    "chapters/02-removal/assets/fig-02-01.html": "cce433afb1a01b92a7fca657d675e49baa6ade667aca7d0f3a963cf257448c7b",
+    "chapters/02-removal/assets/fig-02-01.svg": "5cfe4b27246a830e048603e8c82d1d3ecf01a3314cbad2e61a07d09632b3014e",
+    "chapters/02-removal/materials.md": "df41e86200cc3cc95ad2409a89f846585d74022f56db40d960eb18d64a7037a8",
+    "evidence/upstream/LICENSE": "0c8ab2ba18e08848f301c4af54fdedb4929afcbf120e14353698ed62872c463a",
+    "plan.md": "fcbb640b17c049d38743e5bc5caa91a4a1fd3ff8551b2da3ed7772201eff0b36",
+    "research.json": "6d07959d417e016fc78a76070cac574300ef59603f82ef0720bde7365b1d963b",
+    "review.md": "4eaf0c761ca5751c012943b7ae11fe4768eae3aa515574e91ca2d19c1db9a5ad",
+    "sources.md": "ab4e0b322cc3d239205963a613e0b25cc124ad95d3c3a5f683e843bef81eac5d"
+  },
+  "research_scope": [
+    "01-lifecycle",
+    "02-removal"
+  ],
+  "coverage": {
+    "01-lifecycle": {
+      "chapters": [
+        "manuscript/01-lifecycle.md"
+      ],
+      "reason": "完整保留输入、条目、稳定同级排序、队首访问及后端范围；附加证据可用性说明。"
+    },
+    "02-removal": {
+      "chapters": [
+        "manuscript/02-removal.md"
+      ],
+      "reason": "保留删除、更新成功路径、边界与成本；更新转换失败的旧任务保留语义列为核心缺口，未删除范围。"
+    }
+  },
+  "chapter_reviews": {
+    "manuscript/01-lifecycle.md": "approved",
+    "manuscript/02-removal.md": "pending"
+  },
+  "core_gaps": [
+    {
+      "id": "G1",
+      "chapters": [
+        "manuscript/02-removal.md"
+      ],
+      "status": "open",
+      "resolution": "",
+      "description": "更新已有 task 的 priority 转换失败后旧任务是否保留：缺少固定版本完整 add 代码片段及失败后状态的原始可复核运行记录；第一章图 1-2 已加入不推导异常次序的限定。"
+    }
+  ],
+  "visual_review": "pending"
+}

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Repo to Research"
+  short_description: "主 agent 规划，子 agent 逐章取证与出图，交接可移植研究素材"
+  default_prompt: "使用 $repo-to-research，为这个项目准备图解技术书研究素材。默认委派源码和外部调研子代理，逐章准备材料并调用 diagram-design 与内置 imagegen 完成所需图像。素材交接后停止，不写书、不出版。"
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,13 @@
+{
+  "title": "读懂 Mini Pipeline",
+  "subtitle": "把研究交给 Codex，把写作交给你选择的模型",
+  "language": "zh-CN",
+  "author": "",
+  "edition": "",
+  "chapters": [
+    "manuscript/01-overview.md",
+    "manuscript/02-trace.md",
+    "manuscript/03-boundaries.md"
+  ],
+  "sources": "sources.md"
+}

@@ -1,0 +1,64 @@
+{
+  "before_delivery_exit": 2,
+  "before_delivery_output": "结构检查通过：2 章，3 张插图，11 个书内链接。不是事实审校结论。\n错误：出版章节仍需写作复核（chapter_reviews）\n",
+  "comparison": {
+    "changed_files": [
+      "chapters/02-removal/materials.md",
+      "evidence/external-notes.md",
+      "evidence/figure-production.md",
+      "evidence/independent-review.md",
+      "evidence/source-notes.md",
+      "evidence/source-runtime.txt",
+      "evidence/source_probe.py",
+      "evidence/upstream-provenance.json",
+      "evidence/upstream/README.md",
+      "evidence/upstream/boltons/listutils.py",
+      "evidence/upstream/boltons/queueutils.py",
+      "evidence/upstream/boltons/typeutils.py",
+      "evidence/upstream/pyproject.toml",
+      "evidence/upstream/tests/test_queueutils.py",
+      "research.json",
+      "review.md"
+    ],
+    "review_chapters": [
+      "manuscript/01-lifecycle.md",
+      "manuscript/02-removal.md"
+    ],
+    "applied": false
+  },
+  "apply": {
+    "changed_files": [
+      "chapters/02-removal/materials.md",
+      "evidence/external-notes.md",
+      "evidence/figure-production.md",
+      "evidence/independent-review.md",
+      "evidence/source-notes.md",
+      "evidence/source-runtime.txt",
+      "evidence/source_probe.py",
+      "evidence/upstream-provenance.json",
+      "evidence/upstream/README.md",
+      "evidence/upstream/boltons/listutils.py",
+      "evidence/upstream/boltons/queueutils.py",
+      "evidence/upstream/boltons/typeutils.py",
+      "evidence/upstream/pyproject.toml",
+      "evidence/upstream/tests/test_queueutils.py",
+      "research.json",
+      "review.md"
+    ],
+    "review_chapters": [
+      "manuscript/01-lifecycle.md",
+      "manuscript/02-removal.md"
+    ],
+    "applied": true
+  },
+  "before_manuscript_sha256": {
+    "01-lifecycle.md": "3979d50ab09cb69030942992e460f0b6b49e48049a3b8d376803d11ce2f13972",
+    "02-removal.md": "9d2ba61afc0c89f4a3d6461b88665c5bb6747eceea1311cfe37877834ffdab9a"
+  },
+  "after_refresh_manuscript_sha256": {
+    "01-lifecycle.md": "3979d50ab09cb69030942992e460f0b6b49e48049a3b8d376803d11ce2f13972",
+    "02-removal.md": "9d2ba61afc0c89f4a3d6461b88665c5bb6747eceea1311cfe37877834ffdab9a"
+  },
+  "manuscripts_unchanged": true,
+  "old_dist_removed": true
+}

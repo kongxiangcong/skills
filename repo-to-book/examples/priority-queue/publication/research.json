@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "title": "读懂 boltons 优先队列",
+  "subtitle": "从输入到弹出，再看删除与更新",
+  "language": "zh-CN",
+  "status": "ready",
+  "plan": "plan.md",
+  "sources": "sources.md",
+  "review": "review.md",
+  "evidence_files": [
+    "evidence/external-notes.md",
+    "evidence/figure-production.md",
+    "evidence/independent-review.md",
+    "evidence/source-notes.md",
+    "evidence/source-runtime.txt",
+    "evidence/source_probe.py",
+    "evidence/upstream/LICENSE",
+    "evidence/upstream/README.md",
+    "evidence/upstream/boltons/listutils.py",
+    "evidence/upstream/boltons/queueutils.py",
+    "evidence/upstream/boltons/typeutils.py",
+    "evidence/upstream/pyproject.toml",
+    "evidence/upstream/tests/test_queueutils.py",
+    "evidence/upstream-provenance.json"
+  ],
+  "chapters": [
+    {
+      "id": "01-lifecycle",
+      "title": "从输入到队首访问",
+      "materials": "chapters/01-lifecycle/materials.md",
+      "status": "ready",
+      "assets": [
+        {
+          "id": "fig-01-01",
+          "file": "chapters/01-lifecycle/assets/fig-01-01.svg",
+          "method": "diagram-design",
+          "status": "ready",
+          "caption": "从输入到队首访问",
+          "evidence": [
+            "s01",
+            "s02"
+          ],
+          "editable": "chapters/01-lifecycle/assets/fig-01-01.html"
+        },
+        {
+          "id": "fig-01-02",
+          "file": "chapters/01-lifecycle/assets/fig-01-02.png",
+          "method": "imagegen",
+          "status": "ready",
+          "caption": "优先选择的概念隐喻，不代表数据结构",
+          "evidence": [
+            "s01",
+            "s02"
+          ],
+          "prompt": "chapters/01-lifecycle/assets/fig-01-02.prompt.md"
+        }
+      ]
+    },
+    {
+      "id": "02-removal",
+      "title": "删除、更新与边界",
+      "materials": "chapters/02-removal/materials.md",
+      "status": "ready",
+      "assets": [
+        {
+          "id": "fig-02-01",
+          "file": "chapters/02-removal/assets/fig-02-01.svg",
+          "method": "diagram-design",
+          "status": "ready",
+          "caption": "一个条目的两种离队路径",
+          "evidence": [
+            "s01",
+            "s02"
+          ],
+          "editable": "chapters/02-removal/assets/fig-02-01.html"
+        }
+      ]
+    }
+  ]
+}

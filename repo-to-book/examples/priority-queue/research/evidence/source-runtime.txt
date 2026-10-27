@@ -1,0 +1,42 @@
+Python: 3.12.14 CPython
+module: /workspace/scratch/068517fd0265/work/repo-to-book/examples/priority-queue/research/evidence/upstream/boltons/queueutils.py
+Upstream test functions directly invoked: 2 passed (pytest unavailable)
+PriorityQueue alias: SortedPriorityQueue
+
+Backend: HeapPriorityQueue list
+add A 1 {'live': 1, 'physical': 1, 'entries': [[-1.0, 0, 'A']]}
+add B 3 {'live': 2, 'physical': 2, 'entries': [[-3.0, 1, 'B'], [-1.0, 0, 'A']]}
+add C 3 {'live': 3, 'physical': 3, 'entries': [[-3.0, 1, 'B'], [-1.0, 0, 'A'], [-3.0, 2, 'C']]}
+peek: B {'live': 3, 'physical': 3, 'entries': [[-3.0, 1, 'B'], [-1.0, 0, 'A'], [-3.0, 2, 'C']]}
+pop: B {'live': 2, 'physical': 2, 'entries': [[-3.0, 2, 'C'], [-1.0, 0, 'A']]}
+update A to 3: {'live': 2, 'physical': 3, 'entries': [[-3.0, 2, 'C'], [-1.0, 0, 'REMOVED'], [-3.0, 3, 'A']]}
+remove C: {'live': 1, 'physical': 3, 'entries': [[-3.0, 2, 'REMOVED'], [-1.0, 0, 'REMOVED'], [-3.0, 3, 'A']]}
+peek after cull: A {'live': 1, 'physical': 2, 'entries': [[-3.0, 3, 'A'], [-1.0, 0, 'REMOVED']]}
+pop A: A {'live': 0, 'physical': 1, 'entries': [[-1.0, 0, 'REMOVED']]}
+empty default: None {'live': 0, 'physical': 0, 'entries': []}
+boundary: remove KeyError 'missing'
+boundary: peek IndexError peek on empty queue
+boundary: pop IndexError pop on empty queue
+boundary: add TypeError unhashable type: 'list'
+failed conversion retains old task: stable {'live': 1, 'physical': 1, 'entries': [[-2.0, 4, 'stable']]}
+identity priority_key pop: low
+float normalized: {'live': 2, 'physical': 2, 'entries': [[-9007199254740994.0, 1, 'larger'], [-9007199254740992.0, 0, 'large']]}
+
+Backend: SortedPriorityQueue BarrelList
+add A 1 {'live': 1, 'physical': 1, 'entries': [[-1.0, 0, 'A']]}
+add B 3 {'live': 2, 'physical': 2, 'entries': [[-3.0, 1, 'B'], [-1.0, 0, 'A']]}
+add C 3 {'live': 3, 'physical': 3, 'entries': [[-3.0, 1, 'B'], [-3.0, 2, 'C'], [-1.0, 0, 'A']]}
+peek: B {'live': 3, 'physical': 3, 'entries': [[-3.0, 1, 'B'], [-3.0, 2, 'C'], [-1.0, 0, 'A']]}
+pop: B {'live': 2, 'physical': 2, 'entries': [[-3.0, 2, 'C'], [-1.0, 0, 'A']]}
+update A to 3: {'live': 2, 'physical': 3, 'entries': [[-3.0, 2, 'C'], [-3.0, 3, 'A'], [-1.0, 0, 'REMOVED']]}
+remove C: {'live': 1, 'physical': 3, 'entries': [[-3.0, 2, 'REMOVED'], [-3.0, 3, 'A'], [-1.0, 0, 'REMOVED']]}
+peek after cull: A {'live': 1, 'physical': 2, 'entries': [[-3.0, 3, 'A'], [-1.0, 0, 'REMOVED']]}
+pop A: A {'live': 0, 'physical': 1, 'entries': [[-1.0, 0, 'REMOVED']]}
+empty default: None {'live': 0, 'physical': 0, 'entries': []}
+boundary: remove KeyError 'missing'
+boundary: peek IndexError peek on empty queue
+boundary: pop IndexError pop on empty queue
+boundary: add TypeError unhashable type: 'list'
+failed conversion retains old task: stable {'live': 1, 'physical': 1, 'entries': [[-2.0, 4, 'stable']]}
+identity priority_key pop: low
+float normalized: {'live': 2, 'physical': 2, 'entries': [[-9007199254740994.0, 1, 'larger'], [-9007199254740992.0, 0, 'large']]}

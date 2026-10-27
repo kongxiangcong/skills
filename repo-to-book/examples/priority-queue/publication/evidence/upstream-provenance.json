@@ -1,0 +1,43 @@
+{
+  "repo": "https://github.com/mahmoud/boltons",
+  "commit": "d31d821d56c8f7756af9c30a864077f2e5855321",
+  "retrieved": "2026-10-27",
+  "method": "GitHub connector fetch_file",
+  "files": [
+    {
+      "path": "boltons/queueutils.py",
+      "git_blob_sha": "5ccb3ede24e6bb53034ea3e5f2e15dedf2dc248d",
+      "url": "https://github.com/mahmoud/boltons/blob/d31d821d56c8f7756af9c30a864077f2e5855321/boltons/queueutils.py"
+    },
+    {
+      "path": "tests/test_queueutils.py",
+      "git_blob_sha": "f75fe46a49e1bc46c744ff41aa4eed70380a34a8",
+      "url": "https://github.com/mahmoud/boltons/blob/d31d821d56c8f7756af9c30a864077f2e5855321/tests/test_queueutils.py"
+    },
+    {
+      "path": "LICENSE",
+      "git_blob_sha": "6a4c9d2496f53c61c99ae7c113e6ed94b15b038c",
+      "url": "https://github.com/mahmoud/boltons/blob/d31d821d56c8f7756af9c30a864077f2e5855321/LICENSE"
+    },
+    {
+      "path": "README.md",
+      "git_blob_sha": "412061832f27a51abadb65b376c4b078e69078ad",
+      "url": "https://github.com/mahmoud/boltons/blob/d31d821d56c8f7756af9c30a864077f2e5855321/README.md"
+    },
+    {
+      "path": "pyproject.toml",
+      "git_blob_sha": "cb504d9a28a77275c86dfb9de5bf4bba906f3ccc",
+      "url": "https://github.com/mahmoud/boltons/blob/d31d821d56c8f7756af9c30a864077f2e5855321/pyproject.toml"
+    },
+    {
+      "path": "boltons/listutils.py",
+      "git_blob_sha": "5164427d829458740f7331678d160f7f520f6726",
+      "url": "https://github.com/mahmoud/boltons/blob/d31d821d56c8f7756af9c30a864077f2e5855321/boltons/listutils.py"
+    },
+    {
+      "path": "boltons/typeutils.py",
+      "git_blob_sha": "f1bf73ec8c8e345208ec377e6d1c9d9ff6d0f5b4",
+      "url": "https://github.com/mahmoud/boltons/blob/d31d821d56c8f7756af9c30a864077f2e5855321/boltons/typeutils.py"
+    }
+  ]
+}

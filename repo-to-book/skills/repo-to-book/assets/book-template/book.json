@@ -1,0 +1,9 @@
+{
+  "title": "读懂一个开源项目",
+  "subtitle": "从一条执行路径理解系统",
+  "author": "",
+  "language": "zh-CN",
+  "edition": "",
+  "chapters": ["chapters/01-overview.md"],
+  "sources": "sources.md"
+}
