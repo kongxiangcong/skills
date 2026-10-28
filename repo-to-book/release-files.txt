@@ -172,3 +172,7 @@ examples/writing-edit/input.md
 examples/writing-edit/before.md
 examples/writing-edit/after.md
 examples/writing-edit/review.md
+
+skills/repo-to-write/assets/book-template/overview.mmd
+examples/mini-pipeline/publication/overview.mmd
+examples/mini-pipeline/publication/overview.svg

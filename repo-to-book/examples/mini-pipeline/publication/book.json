@@ -9,5 +9,15 @@
     "manuscript/02-trace.md",
     "manuscript/03-boundaries.md"
   ],
-  "sources": "sources.md"
+  "sources": "sources.md",
+  "overview": {
+    "source": "overview.mmd",
+    "image": "overview.svg",
+    "alt": "全书阅读递进：认识系统对象 → 跟踪一次执行 → 理解接口边界。",
+    "chapters": [
+      "manuscript/01-overview.md",
+      "manuscript/02-trace.md",
+      "manuscript/03-boundaries.md"
+    ]
+  }
 }

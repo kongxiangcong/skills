@@ -1,5 +1,7 @@
 # HTML 默认出版
 
+技能入口：`repo-to-write <research-path> [--format html|pdf|all]`，输入为素材目录，不要求 ZIP。默认 HTML；PDF 与双格式都需实际验证 PDF 环境。
+
 ## 最小依赖
 
 HTML 只需要 Python 3.9+ 和 requirements.txt 中的 markdown-it-py；没有浏览器也可生成。
@@ -14,12 +16,13 @@ python <skill-dir>/scripts/book.py check <book-dir>               # 构建/预�
 python <skill-dir>/scripts/book.py check <book-dir> --delivery    # 完整交付记录检查
 python <skill-dir>/scripts/book.py build <book-dir>                  # 默认 HTML
 python <skill-dir>/scripts/book.py build <book-dir> --format pdf     # 显式 PDF，同时保留 HTML
+python <skill-dir>/scripts/book.py build <book-dir> --format all     # 同时交付 HTML 与 PDF
 ```
 
 ## 输入约定
 
-book.json 包含 title、按顺序排列的 chapters 路径、sources 路径；subtitle/author/language/edition 可选。
-每个章节一个一级标题，二级标题进入目录；可用 `{#stable-id}` 固定锚点。
+book.json 包含 title、按顺序排列的 chapters 路径、sources 路径；author/language/edition 可选；旧 subtitle 字段兼容读取但不展示。
+每个章节一个一级标题，二级、三级标题进入目录；可用 `{#stable-id}` 固定锚点。
 图片独占一段，路径相对章文件，alt 是题注。支持静态 SVG/PNG/JPEG/WebP；
 不支持远程图片、未渲染 Mermaid、动态 SVG/foreignObject/脚本或在线字体。
 
@@ -62,3 +65,28 @@ PDF 使用相同 HTML 的印刷样式、页码、阅读器大纲；生成失败�
 PDF 只有用户要求并实际成功生成时才列为产物。
 下一模型读 plan.md、writing-review.md 和当前章材料即可接续，不需要原模型历史。
 不要删除研究证据或用户原稿以“清理交付物”；也不把缓存、字体文件和登录信息放进分发包。
+
+## 已确认版式
+
+纯白纸面，深杏红书名左对齐，只显示一个书名，下接全书结构流程图，再接无框目录，不设独立封面、目录页、副标题、导读或提示文案。正文宋体回退，标题黑体回退；三级标题 26/21/17px、700 加粗、浅杏红底框；正文与表格用深暖灰，代码与表头用中性浅灰。不要添加大面积红底或红色装饰。
+
+目录覆盖一至三级标题，标题左对齐、页码右对齐，以点线连接。纯 HTML 为连续滚动文档，无固定页码，因此页码栏留空；不估算或填示意页码。PDF 构建通过 Chromium 书签和 PyMuPDF 读取实际页码，回填后重复排版直到页码稳定，输出 PDF 并同步更新 HTML。页码从文档第一页开始，右下角标注，与目录一致。配套 HTML 的页码指向该 PDF，不代表屏幕滚动分页；重建纯 HTML 会清除旧页码。
+
+## 全书结构 Mermaid 流程图
+
+在书名下、目录前嵌入静态 SVG，HTML/PDF 共用；原始 .mmd 随源稿交付。仅制作/更新图时需要 Mermaid CLI 与浏览器；读取已渲染 SVG 的普通 HTML 构建不新增运行依赖。
+
+```json
+"overview": {
+  "source": "overview.mmd",
+  "image": "overview.svg",
+  "alt": "全书阅读顺序：先认识对象，再跟踪执行，最后理解边界；箭头表示阅读递进。",
+  "chapters": ["manuscript/01-overview.md", "manuscript/02-execution.md", "manuscript/03-boundaries.md"]
+}
+```
+
+chapters 必须按顺序列出 book.json 当前全部章节；路径需换成本书实际路径。该字段帮助发现过期图，不能替代图义核验。
+
+本轮使用 Mermaid CLI 11.12.0 安装包内的 Mermaid 库完成渲染；CLI 在当前环境被 file:// 策略阻止，因此改用浏览器 set_content + 内联同一库渲染，未关闭访问限制。以下为普通环境的 CLI 用法，按环境安装并使用 `mmdc -i overview.mmd -o overview.svg -b white`（需要时用 `-p <puppeteer配置.json>` 指定现有浏览器）。Mermaid 配置使用 `htmlLabels: false`、系统字体、`theme: base`，白底、浅杏红节点、深暖灰文字和清晰的灰色连线。流程图必须含 `accTitle:` 和 `accDescr:`。CLI 默认导出不一定符合本书静态 SVG 校验：将 title 移至根元素首位，保留 title/desc 的 id，并设置根节点 role="img" 与 aria-labelledby 指向两者；不改变图形布局，不引入 foreignObject、脚本或外部字体。
+
+新写作必须提供此图。旧 book.json 没有 overview 时仍可构建；一旦登记，缺源文件、缺图片、无效 SVG 或章节列表过期都会阻止出版。构建只验证文件契约；实际 Mermaid 渲染、图文对应和视觉检查仍须如实记录。

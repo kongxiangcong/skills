@@ -1,0 +1,9 @@
+flowchart LR
+    accTitle: Mini Pipeline 全书结构
+    accDescr: 箭头表示阅读递进，不表示函数调用。第1章认识系统对象，第2章沿具体输入跟踪执行，第3章理解失败与接口边界。
+    A["第 1 章<br/>认识系统对象"] --> B["第 2 章<br/>跟踪一次执行"]
+    B --> C["第 3 章<br/>理解接口边界"]
+    classDef chapter fill:#f4e5db,stroke:#b9a99b,color:#41403d,stroke-width:1px;
+    classDef detail fill:#e8eef0,stroke:#9aaeb6,color:#415b65,stroke-width:1px;
+    class A,C chapter;
+    class B detail;
