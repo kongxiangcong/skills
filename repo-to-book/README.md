@@ -48,7 +48,7 @@ diagram-design 的安装方法按其官方仓库；内置 imagegen 按当前 Cod
 使用 diagram-design 绘制精确机制图，使用 Codex 内置 imagegen 生成有教学价值的概念插画。
 图像保存为实际本地文件，附题注、来源、读图说明、编辑源或提示词。
 各章材料要足够让另一模型离线写作，不只交链接。
-完成计划中的所有章节素材、核验并导出交接包后停止，不写书，不调用 repo-to-write。
+完成计划中的所有章节素材与核验，交付完整素材目录后停止（默认不生成 ZIP），不写书，不调用 repo-to-write。
 ```
 
 研究工具仅维护文件，不调用模型或自行启动 agent：
@@ -56,7 +56,7 @@ diagram-design 的安装方法按其官方仓库；内置 imagegen 按当前 Cod
 ```bash
 python skills/repo-to-research/scripts/research.py init ./research --title "读懂某项目" --repo "<URL>"
 python skills/repo-to-research/scripts/research.py check ./research
-python skills/repo-to-research/scripts/research.py export ./research --out ./research-handoff.zip
+# 检查通过后直接交付 ./research 素材目录；默认无需 ZIP。
 ```
 
 研究不是收集越多越好：围绕章节问题取证，源码/文档/运行/推断/未知分别记录。
@@ -85,6 +85,8 @@ research/
 完整格式见 [handoff.md](skills/repo-to-research/references/handoff.md)。
 
 ## 阶段二：用任意模型写作与出版
+
+调用：`repo-to-write <research-path>`，默认 HTML；`--format pdf` 请求 PDF，`--format all` 同时生成 HTML 和 PDF。输入为素材目录。默认纯白纸面、杏红浅框标题、深杏红左对齐书名；书名后先放整理全书阅读关系的 Mermaid 流程图，再接无框目录，不设封面、副标题或导读。
 
 用户明确另开一次写作任务；研究结束不会自动启动这一步。
 向所选模型提供研究包，以及独立的 repo-to-write 技能包：

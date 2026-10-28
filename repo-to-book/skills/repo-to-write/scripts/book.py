@@ -226,7 +226,7 @@ class Book:
                     inline.children = md.parseInline(title)[0].children
                     level = int(token.tag[1])
                     h1_count += level == 1
-                    if level <= 2:
+                    if level <= 3:
                         visible = "".join(t.content for t in inline.children or [] if t.type in {"text", "code_inline"})
                         self.toc.append((level, target, visible))
                 if token.type == "inline":
@@ -248,24 +248,46 @@ class Book:
             self.warnings.append("当前没有图片：请按内容确认是否缺少关键机制图；不以图数强制判失败。")
         return "\n".join(sections)
 
+    def render_overview(self) -> str:
+        """Embed an authored Mermaid export; do not execute source or infer dependencies."""
+        overview = self.config.get("overview")
+        if overview is None:
+            return ""  # Legacy books remain readable; new writing must supply the overview.
+        if not isinstance(overview, dict):
+            raise BookError("overview 应包含 source、image、alt 和 chapters")
+        for key in ("source", "image", "alt"):
+            if not isinstance(overview.get(key), str) or not overview[key].strip():
+                raise BookError("overview 缺少 " + key)
+        if overview.get("chapters") != self.config["chapters"]:
+            raise BookError("overview.chapters 必须与当前章节列表一致；重排或增删章节后请重审结构图")
+        source = local_path(self.root, self.root, overview["source"])
+        picture = local_path(self.root, self.root, overview["image"])
+        if source.suffix.lower() != ".mmd" or not source.is_file():
+            raise BookError("overview.source 需要本地 Mermaid .mmd 文件")
+        if not source.read_text(encoding="utf-8").strip():
+            raise BookError("Mermaid 全书结构图源文件为空")
+        if picture.suffix.lower() != ".svg" or not picture.is_file():
+            raise BookError("overview.image 需要实际渲染的本地 SVG")
+        validate_svg(picture)
+        data = base64.b64encode(picture.read_bytes()).decode("ascii")
+        return '<figure class="book-overview" aria-label="全书结构"><div class="figure-content"><img src="data:image/svg+xml;base64,' + data + '" alt="' + html.escape(overview["alt"], quote=True) + '"></div></figure>'
+
     def html(self) -> str:
         body = self.render_body()
         cfg = self.config
+        overview = self.render_overview()
         title = html.escape(cfg["title"])
         css = (SKILL_ROOT / "assets" / "book.css").read_text(encoding="utf-8")
-        toc = "\n".join('<li class="level-' + str(level) + '"><a href="#' + ident + '">' + html.escape(name) + '</a></li>' for level, ident, name in self.toc)
-        metadata = " · ".join(str(cfg.get(k, "")) for k in ("author", "edition") if cfg.get(k))
+        toc = "\n".join('<li class="level-' + str(level) + '"><a href="#' + ident + '"><span class="toc-text">' + html.escape(name) + '</span><span class="toc-leader" aria-hidden="true"></span><span class="toc-page" data-target="' + ident + '"></span></a></li>' for level, ident, name in self.toc)
         return f'''<!doctype html>
 <html lang="{html.escape(str(cfg.get('language', 'zh-CN')), quote=True)}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; base-uri 'none'">
 <title>{title}</title><style>{css}</style></head>
 <body><main>
-<header class="cover"><p class="eyebrow">REPO TO BOOK / 图解技术书</p><h1>{title}</h1>
-<p class="subtitle">{html.escape(str(cfg.get('subtitle', '')))}</p>
-<div class="cover-rule"></div><p class="metadata">{html.escape(metadata)}</p>
-<p class="cover-note">沿一条真实执行路径，理解系统的结构、机制与取舍。</p></header>
-<nav class="toc" aria-label="目录"><p class="eyebrow">CONTENTS</p><h1>阅读路线</h1><ol>{toc}</ol></nav>
+<header class="book-header"><div class="book-title">{title}</div></header>
+{overview}
+<nav class="toc" aria-label="目录"><div class="toc-title">目录</div><ol>{toc}</ol></nav>
 {body}
 </main></body></html>'''
 
@@ -273,8 +295,9 @@ class Book:
 def write_pdf(html_path: Path, pdf_path: Path, title: str, executable: Optional[str], no_sandbox: bool) -> None:
     try:
         from playwright.sync_api import sync_playwright
+        import pymupdf
     except ImportError:
-        raise BookError("PDF 需要 playwright；请安装 requirements-pdf.txt，并运行 python -m playwright install chromium")
+        raise BookError("PDF 需要 playwright 和 pymupdf；请安装 requirements-pdf.txt，并运行 python -m playwright install chromium")
     try:
         with sync_playwright() as p:
             browser = p.chromium.launch(**browser_options(executable, no_sandbox))
@@ -283,10 +306,33 @@ def write_pdf(html_path: Path, pdf_path: Path, title: str, executable: Optional[
             page = context.new_page()
             page.set_content(html_path.read_text(encoding="utf-8"), wait_until="load")
             page.evaluate("document.fonts.ready")
-            page.pdf(path=str(pdf_path), format="A4", prefer_css_page_size=True,
-                     print_background=True, outline=True, tagged=True,
-                     display_header_footer=True, header_template="<div></div>",
-                     footer_template='<div style="font-family:sans-serif;font-size:8px;color:#526472;width:100%;text-align:center"><span class="pageNumber"></span> / <span class="totalPages"></span></div>')
+            source = html_path.read_text(encoding="utf-8")
+            targets = re.findall(r'data-target="([^"]+)"', source)
+            previous = None
+            with tempfile.TemporaryDirectory() as temp:
+                candidate = Path(temp) / "book.pdf"
+                for attempt in range(5):
+                    page.pdf(path=str(candidate), format="A4", prefer_css_page_size=True,
+                             print_background=True, outline=True, tagged=True,
+                             display_header_footer=True, header_template="<div></div>",
+                             footer_template='<div style="font-family:sans-serif;font-size:8px;color:#6f6a63;width:100%;text-align:right;padding-right:19mm"><span class="pageNumber"></span></div>')
+                    with pymupdf.open(candidate) as document:
+                        entries = [entry for entry in document.get_toc() if entry[0] <= 3]
+                        numbers = [entry[2] for entry in entries]
+                    if len(numbers) != len(targets) or any(n < 1 for n in numbers):
+                        raise BookError("PDF 目录书签与标题不匹配，不能可靠生成页码。")
+                    if numbers == previous:
+                        shutil.copyfile(candidate, pdf_path)
+                        html_path.write_text(source, encoding="utf-8")
+                        break
+                    previous = numbers
+                    mapping = dict(zip(targets, numbers))
+                    source = re.sub(r'(<span class="toc-page" data-target="([^"]+)">).*?(</span>)',
+                                    lambda m: m[1] + str(mapping[m[2]]) + m[3], source)
+                    page.set_content(source, wait_until="load")
+                    page.evaluate("document.fonts.ready")
+                else:
+                    raise BookError("PDF 页码在多次排版后仍未稳定，未交付不可靠页码。")
             browser.close()
     except BookError:
         raise
@@ -336,7 +382,7 @@ def prepare_book(source: Path, destination: Path) -> None:
             shutil.copy2(path, out)
         (destination / "START_HERE.md").write_text(start_here(research), encoding="utf-8")
         (destination / "manuscript").mkdir()
-        config = {key: research[key] for key in ("title", "subtitle", "language") if key in research}
+        config = {key: research[key] for key in ("title", "language") if key in research}
         config.update({"author": "", "edition": "", "chapters": [], "sources": research["sources"]})
         for ch in research["chapters"]:
             rel = "manuscript/" + ch["id"] + ".md"

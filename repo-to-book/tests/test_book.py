@@ -42,10 +42,44 @@ class BookTests(unittest.TestCase):
         self.assertIn('id="sources--s01"', output)
         self.assertEqual(output.count('<figure>'), 4)
 
+    def test_approved_layout_and_three_level_directory(self):
+        cfgpath = self.path / 'book.json'
+        cfg = json.loads(cfgpath.read_text())
+        cfg['subtitle'] = 'LEGACY SUBTITLE MUST NOT APPEAR'
+        cfgpath.write_text(json.dumps(cfg))
+        chapter = self.path / cfg['chapters'][0]
+        chapter.write_text(chapter.read_text() + '\n### 三级目录测试 {#third-level}\n\n说明。\n')
+        b = book.Book(self.path)
+        output = b.html()
+        self.assertNotIn('LEGACY SUBTITLE MUST NOT APPEAR', output)
+        self.assertNotIn('class="cover"', output)
+        self.assertNotIn('阅读路线', output)
+        self.assertIn('class="book-title"', output)
+        self.assertIn('class="level-3"', output)
+        self.assertIn('data-target="ch-01-overview--third-level"></span>', output)
+        self.assertLess(output.index('class="book-title"'), output.index('<nav class="toc"'))
+
+    def test_overview_position_and_stale_chapters(self):
+        output = book.Book(self.path).html()
+        self.assertLess(output.index('class="book-title"'), output.index('<figure class="book-overview"'))
+        self.assertLess(output.index('<figure class="book-overview"'), output.index('<nav class="toc"'))
+        cfgpath = self.path / 'book.json'
+        cfg = json.loads(cfgpath.read_text())
+        cfg['chapters'].reverse()
+        cfgpath.write_text(json.dumps(cfg))
+        with self.assertRaisesRegex(book.BookError, '重审结构图'):
+            book.Book(self.path).html()
+
+    def test_overview_requires_source_and_safe_image(self):
+        (self.path / 'overview.mmd').unlink()
+        with self.assertRaisesRegex(book.BookError, 'Mermaid'):
+            book.Book(self.path).html()
+
     def test_config_controls_order(self):
         cfgpath = self.path / 'book.json'
         cfg = json.loads(cfgpath.read_text(encoding='utf-8'))
         cfg['chapters'].reverse()
+        cfg.pop('overview', None)  # This test exercises chapter ordering for a legacy book.
         cfgpath.write_text(json.dumps(cfg), encoding='utf-8')
         output = book.Book(self.path).html()
         self.assertLess(output.index('<section class="chapter" id="ch-03-boundaries"'), output.index('<section class="chapter" id="ch-01-overview"'))

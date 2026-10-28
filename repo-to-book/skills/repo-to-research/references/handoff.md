@@ -4,7 +4,7 @@
 
 ```text
 research/
-├── START_HERE.md                 # 给任意写作者的入口；export 会重建
+├── START_HERE.md                 # 给任意写作者的入口；交接前核对内容与当前目录一致
 ├── research.json                 # 章节顺序、文件索引和实际完成状态
 ├── plan.md                       # 读者、主题、主线、范围、章节问题
 ├── sources.md                    # 公共来源与固定版本，稳定来源编号
@@ -77,7 +77,7 @@ imagegen 需要真实位图和提示词；diagram-design 需要实际静态图�
 ```bash
 python <skill-dir>/scripts/research.py check <research-dir> --draft
 python <skill-dir>/scripts/research.py check <research-dir>
-python <skill-dir>/scripts/research.py export <research-dir> --out research-handoff.zip
+# 默认直接交付已检查的 research-dir，不压缩、不运行 export。
 ```
 
 检查器只验证结构、占位标记、文件、来源锚点和静态 SVG 基本约定。
