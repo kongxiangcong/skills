@@ -10,7 +10,9 @@
 
 ## Space adaptation
 
-Let components react to their container, not only the global viewport. Reduce secondary text or group optional actions before dropping the main action. Maintain accessible names after visible labels are shortened. On narrow screens stack exploration and detail regions in reading order or open details on demand. Do not squeeze two panels below their minimum useful widths.
+For a dense workbench, a persistent primary view with nearby analysis and local detail panels can support repeated inspection and action. A single-screen composition, two columns, or top-level tabs are options when they fit that task, not defaults for every product. Long-form reading still benefits from continuous document flow; choose tabs only when hidden content is not needed for simultaneous comparison.
+
+Let components react to their container, not only the global viewport. Remove repeated explanatory copy or disclose secondary detail on demand before dropping the main action. Keep dates, missing/stale-data indicators, risk conditions and other information that changes an action's meaning visible at the point of decision. Maintain accessible names after visible labels are shortened. On narrow screens stack exploration and detail regions in reading order or open details on demand. Do not squeeze two panels below their minimum useful widths.
 
 Avoid nested scroll regions unless there is a clear independent task (stream/log, table, source viewer). Mark and name keyboard-scrollable regions. Preserve selected item, draft, and progress when crossing breakpoints. Avoid replacing DOM in a way that destroys focus.
 
@@ -24,4 +26,4 @@ For FOCUS-like readers: preserve the existing theme rather than assuming it need
 
 ## Layout invariants for validation
 
-The primary content is visible without dismissing onboarding. Major actions remain reachable with keyboard and on a narrow screen. A open auxiliary layer does not silently delete or replace the main content. No unintentional page-level horizontal overflow. 200% zoom and large text remain usable; explicitly identify any intentionally scrolling graph/table. Do not fade historical reading text below useful contrast.
+The primary content is visible without dismissing onboarding. Major actions remain reachable with keyboard and on a narrow screen. An open auxiliary layer does not silently delete or replace the main content. No unintentional page-level horizontal overflow. A fixed viewport must not hide necessary content through clipping: at narrow widths, 200% zoom and large text, allow reflow or deliberate accessible scrolling so content and actions remain reachable. Explicitly identify any intentionally scrolling graph/table. Do not fade historical reading text below useful contrast.

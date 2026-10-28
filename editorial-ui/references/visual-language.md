@@ -16,6 +16,8 @@ Start reading text at 16–18 CSS px with 1.65–1.85 line height; controls at 1
 
 Use bounded reading width and full available width for graphs/tables when necessary. Long words use `overflow-wrap:anywhere`; code uses a deliberate local scroll region, never a page-wide overflow. Use tabular numerals and retain units for comparable data. Do not truncate the value needed for a decision.
 
+Judge charts at their actual displayed size. Scaling an entire SVG or canvas can make axis labels, units and legends unreadable even when source font sizes, contrast and overflow checks pass. Adapt plot geometry, tick density and label placement while preserving readable rendered text; a larger source drawing is not evidence of legibility.
+
 ## Geometry
 
 Default rhythm comes from the space scale. Use smaller radii for compact controls, moderate radii for panels, and larger radii only for truly larger containers. Do not independently randomize every radius. Concentric nesting is a useful visual approximation, not a physical law or exact requirement in every layout.
@@ -23,6 +25,8 @@ Default rhythm comes from the space scale. Use smaller radii for compact control
 Use a stable transparent border or outline/box-shadow when an active state would otherwise change box size. Do not assert that ordinary CSS borders inherently cause jitter. Elevation must represent actual layering, not decorate every section.
 
 ## Color and accessibility
+
+Separate action emphasis from business semantics: a primary action accent does not determine the colors of series, gains/losses, warnings or other domain states. Follow the product's established meanings and retain non-color cues; no particular action hue or regional status-color convention is universal.
 
 Keep low contrast in ornamental surfaces, not in functional text. Check actual foreground/background composites, hover/selected/disabled states, both themes, and focus rings. WCAG normal-text minimum is generally 4.5:1; large text generally 3:1 [S1]. The bundled checks test specified token pairs, not every possible composition.
 

@@ -51,7 +51,7 @@ Distinguish **source-confirmed**, **upstream-claimed**, **product decision**, an
 
 Read [layout patterns](references/layout-patterns.md) and [visual language](references/visual-language.md).
 
-Use the content's natural organization:
+Identify the primary object that should stay visible during the task, the main action, and supporting information before choosing cards or panels. Use the content's natural organization:
 - Reading: continuous document flow; auxiliary explanations do not advance the reading cursor. Keep document navigation distinct from conversation follow.
 - Exploration: spatial object first; selected-object details second; selection survives resize.
 - Analysis: conclusion, comparison, evidence; filters change real data, not decoration.

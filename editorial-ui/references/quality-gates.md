@@ -17,6 +17,8 @@ Wide desktop 1440×1000; compact desktop 1024×768; mobile 390×844 and 320×740
 
 Full-screen overlays must be tested inside the existing app's full-screen root. Embedded iframes, real touch gestures, screen readers and native IMEs require dedicated checks; this bundle does not claim those are covered by a Chromium headless smoke test.
 
+For charts, inspect axes, units and legends in the actual rendered container at the relevant sizes and zoom levels. Verify that a pointer/crosshair and its tooltip resolve to the same datum, timestamp, series and units, including after resize or filtering. Check missing/stale-data states against the data source. A chart that fits without overflow or passes contrast checks can still be unreadable or identify the wrong data.
+
 ## Evidence levels
 
 `PASS`: performed assertion passed, with command or observation.

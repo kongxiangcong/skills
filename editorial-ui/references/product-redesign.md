@@ -42,6 +42,8 @@ A complete token sheet is not a complete redesign. Do not postpone the real slic
 
 ## Preserve the hard parts while changing the surface
 
+Inspect which relationships in the existing interface help users perform the task: the primary object they keep in view, the evidence they compare nearby, and where they act. Preserve useful task mental models through the redesign unless changing them serves the approved goal. A new visual system need not fragment a coherent main view into equal-weight cards; evaluate the real slice by whether users can still inspect, compare and act in context.
+
 Keep controllers/adapters and public contracts stable initially. Extract presentational components around the existing state, subscriptions, request IDs, monotonic versions and retry policies. Do not run two controllers or duplicate network listeners for before/after rendering. An internal comparison switch may select a view only; it must not create parallel sessions.
 
 Navigation intent, stream-follow intent and layout restoration are distinct. An overlay, resize, theme change or late image is not a new document event. Retain stable content identity, focused action, unsent drafts and meaningful viewport position. Retain the actual top-layer/fullscreen relationship; a body portal is not automatically correct for every fullscreen implementation.
