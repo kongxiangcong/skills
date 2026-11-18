@@ -1,10 +1,11 @@
 {
-  "title": "读懂一个开源项目",
+  "title": "开源项目技术解析",
   "author": "",
   "language": "zh-CN",
   "edition": "",
+  "outline": "outline.md",
   "chapters": [
-    "chapters/01-overview.md"
+    "chapters/01-overview/manuscript.md"
   ],
   "sources": "sources.md"
 }
