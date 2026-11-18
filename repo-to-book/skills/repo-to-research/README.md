@@ -1,17 +1,16 @@
 # repo-to-research
 
-这是独立的阶段一技能。主 agent 规划，默认用子 agent 做源码/外部研究及关键核验，
-按用途调用 diagram-design 与 Codex 内置 imagegen 完成实际图像。交付素材后停止，不写书。
+独立的阶段一研究技能。围绕同一专题目录与唯一一份 `outline.md` 工作，分为两个明确阶段：
+
+1. **讨论与确认大纲**：新建或更新 `outline.md`（全书约定 + 逐章大纲），更新后停下等待用户确认。
+2. **按确认版备料**：用户说「大纲可以了，按这版调研」后，默认委派源码与外部调研子 agent 逐章收集素材写入 `chapters/<id>/materials.md`，调用 `diagram-design` 与内置 `imagegen` 将配图存入 `chapters/<id>/assets/`，独立核验后停止，不写正式正文。
 
 将本目录放入 `~/.agents/skills/repo-to-research`，新会话使用 `$repo-to-research`。
-工具与出图能力由当前 Codex 提供，缺失时不能伪装调用；本包不会安装模型或收集 API key。
-主指引见 SKILL.md。素材初始化、检查和打包只使用 Python 标准库：
 
 ```bash
-python scripts/research.py init ./research --title "读懂某项目"
-python scripts/research.py check ./research
-python scripts/research.py export ./research --out ./research-handoff.zip
+python scripts/research.py init ./topic-dir --title "项目技术解析" --repo "<仓库路径或URL>"
+python scripts/research.py check ./topic-dir --draft
+python scripts/research.py check ./topic-dir
 ```
 
-完整格式见 references/handoff.md；图片生产见 references/visual-production.md。
-没有最终正文、HTML 或 PDF 生产命令。之后由用户另行调用独立 repo-to-write 技能。
+完整目录契约见 `references/handoff.md`；工作流见 `references/research-workflow.md`；图片生产见 `references/visual-production.md`。之后由用户在所选模型中调用 `repo-to-write` 技能在同一专题目录内写作。

@@ -64,13 +64,15 @@ skills/repo-to-write/SKILL.md
 skills/repo-to-write/THIRD_PARTY_NOTICES.md
 skills/repo-to-write/agents/openai.yaml
 skills/repo-to-write/assets/book-template/book.json
-skills/repo-to-write/assets/book-template/chapters/01-overview.md
+skills/repo-to-write/assets/book-template/chapters/01-overview/manuscript.md
+skills/repo-to-write/assets/book-template/outline.md
 skills/repo-to-write/assets/book-template/sources.md
 skills/repo-to-write/assets/book-template/writing-review.md
 skills/repo-to-write/assets/book.css
 skills/repo-to-write/references/portable-handoff.md
 skills/repo-to-write/references/publishing.md
 skills/repo-to-write/references/writing.md
+skills/repo-to-write/references/writing-style.md
 skills/repo-to-write/requirements-pdf.txt
 skills/repo-to-write/requirements.txt
 skills/repo-to-write/scripts/book.py

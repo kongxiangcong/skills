@@ -1,4 +1,4 @@
-"""The v1 portable research-directory contract. Standard library only.
+"""The portable topic-directory contract. Standard library only.
 
 This file is shipped identically in both skills so either can be installed alone.
 Checks establish completeness of files/references, never factual correctness.
@@ -12,7 +12,15 @@ from typing import Any, Dict, List, Set
 
 
 class HandoffError(ValueError):
-    """Invalid or unfinished portable research package."""
+    """Invalid or unfinished portable topic package."""
+
+
+def outline_field(obj: Dict[str, Any]) -> str:
+    """Return the outline filename ('outline' preferred, 'plan' accepted for compatibility)."""
+    value = obj.get("outline") or obj.get("plan")
+    if not isinstance(value, str) or not value.strip():
+        raise HandoffError("research.json 缺少 outline（应指向 outline.md）")
+    return value
 
 
 def local_file(root: Path, value: str) -> Path:
@@ -43,7 +51,7 @@ def read_text(root: Path, value: str, ready: bool) -> str:
 
 
 def read_bundle(root: Path, require_ready: bool = True) -> Dict[str, Any]:
-    """Load a research package; reject missing real assets and unresolved source IDs."""
+    """Load a topic research package; reject missing real assets and unresolved source IDs."""
     root = root.resolve()
     try:
         obj = json.loads((root / "research.json").read_text(encoding="utf-8"))
@@ -57,7 +65,9 @@ def read_bundle(root: Path, require_ready: bool = True) -> Dict[str, Any]:
         raise HandoffError("research.json 的 status 必须是 draft 或 ready")
     if require_ready and obj["status"] != "ready":
         raise HandoffError("素材仍是 draft；先完成研究、实际出图与核验，再由用户启动写作")
-    for key in ("plan", "sources", "review"):
+    outline_rel = outline_field(obj)
+    read_text(root, outline_rel, require_ready)
+    for key in ("sources", "review"):
         if key not in obj:
             raise HandoffError(f"research.json 缺少 {key}")
         read_text(root, obj[key], require_ready)
@@ -120,7 +130,6 @@ def read_bundle(root: Path, require_ready: bool = True) -> Dict[str, Any]:
                 raise HandoffError(f"图片 {aid} 缺少依据（概念插画也要说明所解释的概念出处）")
             if set(refs) - available:
                 raise HandoffError(f"图片 {aid} 引用了不存在的来源：{sorted(set(refs)-available)}")
-            # Drafts may list planned assets; ready assets must already be files.
             if require_ready or asset["status"] == "ready":
                 p = local_file(root, asset.get("file", ""))
                 if p.suffix.lower() not in {".svg", ".png", ".jpg", ".jpeg", ".webp"}:
@@ -157,8 +166,9 @@ def read_bundle(root: Path, require_ready: bool = True) -> Dict[str, Any]:
 
 
 def bundle_files(root: Path, obj: Dict[str, Any]) -> List[Path]:
-    """Only explicitly registered files travel; never zip an entire code checkout."""
-    values = {"research.json", obj["plan"], obj["sources"], obj["review"]}
+    """Only explicitly registered research files travel; never zip an entire code checkout."""
+    outline_rel = outline_field(obj)
+    values = {"research.json", outline_rel, obj["sources"], obj["review"]}
     values.update(obj.get("evidence_files", []))
     for ch in obj["chapters"]:
         values.add(ch["materials"])
@@ -170,55 +180,42 @@ def bundle_files(root: Path, obj: Dict[str, Any]) -> List[Path]:
 
 
 def start_here(obj: Dict[str, Any]) -> str:
-    """Platform-neutral entry: it is usable even without chat history or a skill loader."""
-    rows = "\n".join(f'- **{c["id"]} · {c["title"]}**：`{c["materials"]}`' for c in obj["chapters"])
+    """Platform-neutral entry telling the next writer the 4 essential handoff facts."""
+    outline_rel = outline_field(obj)
+    rows = "\n".join(
+        f'- **{c["id"]} · {c["title"]}**：材料 `{c["materials"]}` → 正文 `chapters/{c["id"]}/manuscript.md`'
+        for c in obj["chapters"]
+    )
     return f'''# 从这里开始：{obj["title"]}
 
-这是阶段一交接的研究素材，不是已写好的书。研究与绘图已经停止，
-**只有用户另行调用 repo-to-write，或明确委托其他模型写作时，才开始阶段二。**
+本专题目录由研究与写作共用。研究阶段已完成备料并停止；**只有用户另行调用 `repo-to-write` 或明确委托写作时，才开始写作阶段。**
 
-## 阅读顺序
+## 1. 读哪份大纲
 
-先读 `research.json`（版本、章节顺序、图片实际路径），再读 `{obj["plan"]}`
-（读者、主题主线与范围）、`{obj["review"]}`（实际核验与已知局限）。
-写每章时只加载该章材料、所引来源与图片；不要一次塞入全部材料。
+先读 `{outline_rel}`（包含全书约定与逐章大纲，是唯一结构版本）以及 `research.json`（章节顺序与配图索引）。
+章数、章序、各章小节分工和例子放置约定均以 `{outline_rel}` 为准，写作阶段不拆章、不合章、不重排。
+
+## 2. 各章材料在哪
+
+写每章时按需读取该章的 `materials.md`、所引来源与本章 `assets/` 配图，不要一次塞入全书材料：
 
 {rows}
 
-共同来源见 `{obj["sources"]}`。`evidence_files` 登记的源码切片与资料摘要随包提供。
-图片在各章 `assets/` 中；提示词、可编辑图稿和题注用于理解或修订，不能代替实际图片。
+共同来源见 `{obj["sources"]}`，多章共用证据见 `evidence/`。`materials.md` 中标为“仅供作者核对”的源码路径、行号与具体 case 地址只供核对事实，不直接抄入读者正文或字段表。
 
-## 给任意写作模型的指令
+## 3. 正文写到哪
 
-使用 repo-to-write 的写作方法，将这些材料组织成一部有统一主线的图解技术书。
-不要重新运行研究、联网查证或调用 Codex；不要依赖原聊天、临时工具 id 或原机器路径。
-先设计各章的叙事与衔接，再逐章独立组织语言，不拼贴研究笔记。
-图前交代问题，图后带读关键变化与设计取舍；使用包内静态图片和稳定来源编号。
-区分源码事实、文档声明、运行观察、推断及未知。发现证据缺口时明确标出，
-不能用常识补成项目事实；影响核心结论的缺口退回研究阶段，其余明示限制。
-
-默认交付源稿目录（章节 Markdown + 实际图片 + 来源 + 编排配置）和离线 HTML。
-PDF 仅在用户明确要求时另行生成。不要擅自把图片发往外部服务。
-
-## 有终端的运行环境
-
-将独立 `repo-to-write` 技能包放到任意目录（无需 Codex、模型 API 或研究技能）。
-安装它的 `requirements.txt`，然后执行：
+直接在当前专题目录内逐章写入 `chapters/<id>/manuscript.md`，不另建 `-publication` 兄弟目录：
 
 ```bash
-python <repo-to-write>/scripts/book.py prepare <本素材目录> <新的图书目录>
-# 按材料写完 manuscript/ 下的各章，并填写 writing-review.md
-python <repo-to-write>/scripts/book.py build <新的图书目录>
-# 只有明确需要 PDF 时：安装 requirements-pdf.txt 和 Chromium，再用 --format pdf
+python <repo-to-write>/scripts/book.py prepare <本专题目录>
+# 按 outline.md 和各章 materials.md 写完 chapters/*/manuscript.md，并更新 writing-review.md
+python <repo-to-write>/scripts/book.py check <本专题目录>
+python <repo-to-write>/scripts/book.py build <本专题目录>
+# 只有明确需要 PDF 时：安装 requirements-pdf.txt 和 Chromium，再加 --format pdf
 ```
 
-## 仅聊天、没有文件执行工具的环境
+## 4. 研究核验与已知缺口
 
-上传本包与独立写作技能包；模型可以按章节交付 Markdown 与图片插入位置，
-用户将文件保存进图书目录后运行同一出版命令。
-没有文件读取能力时，按章提供 materials.md、引用的来源条目及图片附件。
-没有执行过出版命令，不能声称已生成或验证 HTML/PDF。
-
-本包只有普通 UTF-8 Markdown、JSON 与本地素材文件；不包含模型会话状态或账号凭据。
-打包只证明文件齐备，不代表技术事实正确。给第三方模型前，请确认内部材料允许外传。
+研究阶段的实际核验范围与已知缺口见 `{obj["review"]}`。写作中若发现影响核心结论的新缺口，记入 `writing-review.md` 与 `book.json` 的 `core_gaps`，不要用常识补造项目事实。
 '''
